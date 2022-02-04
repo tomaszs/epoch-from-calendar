@@ -6,9 +6,7 @@ A HTML+Vanilla JS+CSS tool to copy to clipboard epoch based on calendar or prese
 
 [---> 🔗 Open The Tool <---- ](https://tomasz-smykowski.com/tools/epoch-from-calendar/)
 
-## Preview
-
-![image](https://user-images.githubusercontent.com/834977/152526970-f355204e-4218-4ad8-8072-8f399919e842.png)
+[![image-text](https://user-images.githubusercontent.com/834977/152526970-f355204e-4218-4ad8-8072-8f399919e842.png)](https://tomasz-smykowski.com/tools/epoch-from-calendar/)
 
 ## Features
 
@@ -32,3 +30,7 @@ A HTML+Vanilla JS+CSS tool to copy to clipboard epoch based on calendar or prese
 ## Feature&bug requests
 
 If you'd like to see a new feature, or have a bug request, please create an issue
+
+## Contributors
+
+Tom Smykowski
