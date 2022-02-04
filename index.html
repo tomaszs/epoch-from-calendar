@@ -1,0 +1,139 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Epoch From Calendar</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="img/fav/apple-touch-icon.png">
+		<link rel="icon" type="image/png" sizes="32x32" href="img/fav/favicon-32x32.png">
+		<link rel="icon" type="image/png" sizes="16x16" href="img/fav/favicon-16x16.png">
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <script src="https://unpkg.com/dayjs@1.8.21/dayjs.min.js"></script>
+    <script src="https://unpkg.com/clipboard@2/dist/clipboard.min.js"></script>
+        
+    <link href="//cdn.muicss.com/mui-0.10.3/css/mui.min.css" rel="stylesheet" type="text/css" />
+    <script src="//cdn.muicss.com/mui-0.10.3/js/mui.min.js"></script>
+    
+    <script>
+			
+			window.onload = function() {
+				new ClipboardJS('.clipboard-enabled');
+				adjustText();
+			}
+			
+			function copy(button, date) {
+				button.dataset.clipboardText = date.unix();
+				document.querySelector('#date').value = date.format();
+			}
+			
+			function adjustText() {
+				if (window.innerWidth < 800) {
+				
+					const shorterForms = {
+						'Copy' : 'Cpy',
+						'Five minutes ago' : '-5 m',
+						'In five minutes' : '+5 m',
+						'An hour ago' : '-1 h',
+						'In an hour' : '+1 h',
+						'Yesterday' : '-1 d',
+						'End of today' : 'Start',
+						'End of today' : 'End',
+						'End of tomorrow' : '+1 d end',
+						'7 days ago' : '-7 d',
+						'Start of the week' : 'Week start',
+						'End of the week' : 'end',
+						'In 7 days' : '+7 d end',
+						'30 days ago' : '-30 d',
+						'Start of the month' : 'Month start',
+						'End of the month' : 'end',
+						'In 30 days' : '+30 d end',
+					};
+					
+					for (var key in shorterForms) {
+						const valuator = document.evaluate( '//button[text()="' + key + '"]', document, null, XPathResult.ANY_TYPE, null );
+						const item = valuator.iterateNext();
+						console.log(item);
+						if (item) item.innerText = shorterForms[key];
+					}
+				}
+			}
+			
+			function handleCustomTime() {
+				const picker = document.querySelector('#custom-time');
+				const epoch = dayjs(picker.value).unix();
+				document.querySelector('#custom-time-button').dataset.clipboardText = epoch;
+			}
+    
+    </script>
+    
+    <style>
+			
+			#date {
+				min-width: 260px;
+			}
+    
+    </style>
+    
+  </head>
+  <body>
+    <div class="mui-container">
+      <div class="mui-panel">
+				<!--<img src='package-json-to-markup-table.jpg' style='max-width: 20%;' />-->
+        <div><strong>Epoch From Calendar by <a href='https://tomasz-smykowski.com'>Tom Smykowski</a></strong></div>
+        <div class="mui--text-subhead">Click a button to copy date to clipboard in <strong>epoch</strong> format</div>
+				
+				<form class="mui-form--inline">
+					<div class="mui-textfield">
+						ISO preview: <input type="text" id='date'>
+					</div>
+				</form>
+				
+				Input:<br/>
+				<input type="datetime-local" id="custom-time">
+				&nbsp;&nbsp;&nbsp;<button class="mui-btn mui-btn--primary clipboard-enabled" onmousedown="handleCustomTime()" id="custom-time-button">Copy</button>
+					
+				<br/>
+			
+				<button class="mui-btn mui-btn--primary clipboard-enabled" onclick="copy(this, dayjs().add(-5, 'minute'))">Five minutes ago</button>
+				<button class="mui-btn mui-btn--accent clipboard-enabled" onclick="copy(this, dayjs())">Now</button>
+				<button class="mui-btn mui-btn--primary clipboard-enabled" onclick="copy(this, dayjs().add(5, 'minute'))">In five minutes</button>
+				<br/>
+			
+				<button class="mui-btn mui-btn--primary clipboard-enabled" onclick="copy(this, dayjs().add(-1, 'hour'))">An hour ago</button>
+				<button class="mui-btn mui-btn--primary clipboard-enabled" onclick="copy(this, dayjs().add(1, 'hour'))">In an hour</button>
+				<br/>
+				
+				<button class="mui-btn mui-btn--accent clipboard-enabled" onclick="copy(this, dayjs().startOf('day'))">Today</button>
+				<button class="mui-btn mui-btn--primary clipboard-enabled" onclick="copy(this, dayjs().endOf('day'))">End of today</button>
+				<br/>
+				
+				<button class="mui-btn mui-btn--primary clipboard-enabled" onclick="copy(this, dayjs().add(-1, 'day').startOf('day'))">Yesterday</button>
+				<button class="mui-btn mui-btn--primary clipboard-enabled" onclick="copy(this, dayjs().add(1, 'day').endOf('day'))">End of tomorrow</button>
+				<br/>
+				
+				<button class="mui-btn mui-btn--accent clipboard-enabled" onclick="copy( this, dayjs().startOf('week').startOf('day') )">Start of the week</button>
+				<button class="mui-btn mui-btn--primary clipboard-enabled" onclick="copy(this, dayjs().endOf('week').endOf('day'))">End of the week</button>
+				<br/>
+				
+				<button class="mui-btn mui-btn--primary clipboard-enabled" onclick="copy( this, dayjs().add(-7, 'day').startOf('day') )">7 days ago</button>
+				<button class="mui-btn mui-btn--primary clipboard-enabled" onclick="copy(this, dayjs().add(7, 'day').endOf('day') )">In 7 days</button>
+				<br/>
+				
+				<button class="mui-btn mui-btn--accent clipboard-enabled" onclick="copy( this, dayjs().startOf('month').startOf('day') )">Start of the month</button>
+				<button class="mui-btn mui-btn--primary clipboard-enabled" onclick="copy(this, dayjs().endOf('month').endOf('day'))">End of the month</button>
+				<br/>
+				
+				<button class="mui-btn mui-btn--primary clipboard-enabled" onclick="copy( this, dayjs().add(-30, 'day').startOf('day') )">30 days ago</button>
+				<button class="mui-btn mui-btn--primary clipboard-enabled" onclick="copy(this, dayjs().add(30, 'day').endOf('day') )">In 30 days</button>
+				
+					
+				<br/><br/>
+				<footer><strong>Buy me a coffee or two: <a href='https://buy.stripe.com/00g6pTcw89Um0mI8wx'>buy a $1 coffee</a>. Thanks!</strong></footer>
+
+      </div>
+    </div>
+    
+  </body>
+</html>
